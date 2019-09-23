@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<recipetypes>
+    <recipetype>
+        <type>Malay</type>
+        <type>Chinese</type>
+        <type>Indian</type>
+        <type>Western</type>
+    </recipetype>
+</recipetypes>
