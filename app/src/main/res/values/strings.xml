@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">RecipeApp</string>
+    <string name="malay">Malay</string>
+    <string name="chinese">Chinese</string>
+    <string name="indian">Indian</string>
+    <string name="western">Western</string>
+</resources>

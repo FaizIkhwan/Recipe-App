@@ -1,4 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<recipes>
 
-</PreferenceScreen>
+    <recipe>
+        <id>1</id>
+        <title>Fish and chips</title>
+        <ingredient>Fish, fries</ingredient>
+        <step>1. Fry, 2. Eat</step>
+        <type>Western</type>
+    </recipe>
+
+    <recipe>
+        <id>1</id>
+        <title>Nasi Lemak</title>
+        <ingredient>Rice, Sambal</ingredient>
+        <step>1. Cook, 2. Eat</step>
+        <type>Malay</type>
+    </recipe>
+
+    <recipe>
+        <id>1</id>
+        <title>Char Kuey Tiow</title>
+        <ingredient>Noodle</ingredient>
+        <step>1. Cook, 2. Eat</step>
+        <type>Chinese</type>
+    </recipe>
+
+    <recipe>
+        <id>1</id>
+        <title>Tosai</title>
+        <ingredient>Flour</ingredient>
+        <step>1. Bake, 2. Eat</step>
+        <type>Indian</type>
+    </recipe>
+
+</recipes>

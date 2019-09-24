@@ -1,10 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".Activity.RecipeListActivity">
 
-</android.support.constraint.ConstraintLayout>
+    <TextView
+        android:id="@+id/recipeTypeTV"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:text="type"
+        android:textStyle="bold"
+        android:textSize="36sp"
+        android:textColor="@color/black">
+    </TextView>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/listOfRecipeRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="20dp">
+    </android.support.v7.widget.RecyclerView>
+
+
+</LinearLayout>
