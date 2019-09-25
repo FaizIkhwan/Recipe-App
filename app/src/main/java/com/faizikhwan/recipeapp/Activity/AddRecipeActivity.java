@@ -1,17 +1,16 @@
 package com.faizikhwan.recipeapp.Activity;
 
 import android.content.Intent;
-import android.database.Cursor;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.faizikhwan.recipeapp.Adapter.RecipeHomeAdapter;
 import com.faizikhwan.recipeapp.Database.DatabaseHelper;
@@ -23,23 +22,23 @@ import com.faizikhwan.recipeapp.R;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HomeActivity extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
+public class AddRecipeActivity extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
 
     // Constant
-    private final String TAG = "HomeActivity";
+    private final String TAG = "AddRecipeActivity";
 
     // Interface component
-    private RecyclerView viewListRecipeRecycler;
+    private EditText recipeNameET;
+    private EditText recipeIngredientET;
+    private EditText recipeStepET;
     private Spinner recipeTypeSpinner;
-    private Button filterButton;
     private Button addButton;
-
-    // Adapter
-    private RecipeHomeAdapter recipeHomeAdapter;
 
     // Variable
     private ArrayList<RecipeType> recipeTypes;
-    private List<Recipe> recipes;
+    private String recipeName;
+    private String recipeIngredient;
+    private String recipeStep;
     private String recipeTypeChoice;
 
     //Database
@@ -48,27 +47,27 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home);
+        setContentView(R.layout.activity_add_recipe);
 
         initComponent();
         setOnClickListener();
         setOnItemSelectedListener();
         populateSpinner();
-        getDataFromDatabase();
-        setupRecyclerView();
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.filterButton:
-                Intent intent = new Intent(this, RecipeListActivity.class);
-                intent.putExtra("type", recipeTypeChoice);
-                startActivity(intent);
-                break;
             case R.id.addButton:
-                startActivity(new Intent(this, AddRecipeActivity.class));
-                break;
+                recipeName = recipeNameET.getText().toString();
+                recipeIngredient = recipeIngredientET.getText().toString();
+                recipeStep = recipeStepET.getText().toString();
+                if (recipeName.isEmpty() || recipeIngredient.isEmpty() || recipeStep.isEmpty()) {
+                    Toast.makeText(this, "Must fill all detail", Toast.LENGTH_LONG).show();
+                } else {
+                    saveToDatabase();
+                    startActivity(new Intent(this, HomeActivity.class));
+                }
         }
     }
 
@@ -87,14 +86,14 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void initComponent() {
-        viewListRecipeRecycler = findViewById(R.id.viewListRecipeRecycler);
+        recipeNameET = findViewById(R.id.recipeNameET);
+        recipeIngredientET = findViewById(R.id.recipeIngredientET);
+        recipeStepET = findViewById(R.id.recipeStepET);
         recipeTypeSpinner = findViewById(R.id.recipeTypeSpinner);
-        filterButton = findViewById(R.id.filterButton);
         addButton = findViewById(R.id.addButton);
     }
 
     private void setOnClickListener() {
-        filterButton.setOnClickListener(this);
         addButton.setOnClickListener(this);
     }
 
@@ -112,32 +111,8 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         recipeTypeSpinner.setAdapter(adapter);
     }
 
-    private void getDataFromDatabase() {
-        recipes = new ArrayList<>();
+    private void saveToDatabase() {
         myDB = new DatabaseHelper(this);
-        Cursor res = myDB.getDataFromRecipe();
-        if (res != null && res.moveToFirst()) {
-            do {
-                int id = res.getInt(res.getColumnIndex("ID"));
-                String title = res.getString(res.getColumnIndex("TITLE"));
-                String ingredient = res.getString(res.getColumnIndex("INGREDIENT"));
-                String step = res.getString(res.getColumnIndex("STEP"));
-                String type = res.getString(res.getColumnIndex("TYPE"));
-
-                recipes.add(new Recipe(id, title, ingredient, step, type));
-            } while (res.moveToNext());
-        } else {
-            recipes = XMLParser.parseXMLRecipes(this, "recipes.xml");
-            for (Recipe recipe: recipes) {
-                myDB.insertDataRecipe(recipe.getTitle(), recipe.getIngredient(), recipe.getStep(), recipe.getType());
-            }
-        }
-    }
-
-    private void setupRecyclerView() {
-        viewListRecipeRecycler.setHasFixedSize(true);
-        viewListRecipeRecycler.setLayoutManager(new LinearLayoutManager(this));
-        recipeHomeAdapter = new RecipeHomeAdapter(this, recipes);
-        viewListRecipeRecycler.setAdapter(recipeHomeAdapter);
+        myDB.insertDataRecipe(recipeName, recipeIngredient, recipeStep, recipeTypeChoice);
     }
 }
