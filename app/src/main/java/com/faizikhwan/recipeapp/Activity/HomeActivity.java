@@ -121,10 +121,12 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                 recipes.add(new Recipe(id, title, ingredient, step, type));
             } while (res.moveToNext());
         } else {
+            Log.d(TAG, "else");
             recipes = XMLParser.parseXMLRecipes(this, "recipes.xml");
             for (Recipe recipe: recipes) {
-                Log.d(TAG, recipe.toString());
-                myDB.insertDataRecipe(recipe.getTitle(), recipe.getIngredient(), recipe.getStep(), recipe.getType());
+                Log.d(TAG, "RECIPE: " + recipe.toString());
+                boolean state =myDB.insertDataRecipe(recipe.getTitle(), recipe.getIngredient(), recipe.getStep(), recipe.getType());
+                Log.d(TAG, "state: " + state);
             }
         }
     }

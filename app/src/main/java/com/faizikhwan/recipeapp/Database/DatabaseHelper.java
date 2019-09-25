@@ -40,7 +40,7 @@ public class DatabaseHelper extends SQLiteOpenHelper
         Log.d(TAG, "onCreate");
 
         //creating required tables
-        db.execSQL("create table " + TABLE_NAME_RECIPE +" (ID INTEGER PRIMARY KEY AUTOINCREMENT, TITLE TEXT, INGREDIENT TEXT, STEP TEXT, TYPE TEXT)");
+        db.execSQL("create table " + TABLE_NAME_RECIPE +" (ID INTEGER PRIMARY KEY AUTOINCREMENT, TITLE TEXT, INGREDIENT TEXT, STEP TEXT, TYPE TEXT);");
     }
 
     /**
@@ -64,6 +64,7 @@ public class DatabaseHelper extends SQLiteOpenHelper
      */
     public boolean insertDataRecipe(String title, String ingredient, String step, String type)
     {
+        Log.d(TAG, "insertDataRecipe");
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(COL_2_RECIPE, title);
@@ -110,7 +111,7 @@ public class DatabaseHelper extends SQLiteOpenHelper
     public Cursor getDataFromRecipeWithType(String type)
     {
         SQLiteDatabase db = this.getWritableDatabase();
-        String query = "select * from " + TABLE_NAME_RECIPE + " where TYPE = " + type + ";";
+        String query = "select * from " + TABLE_NAME_RECIPE + " where TYPE = '" + type + "';";
         Cursor res = db.rawQuery(query,null);
         return res;
     }
