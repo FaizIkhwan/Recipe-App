@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activity.EditRecipeActivity">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:text="Edit recipe"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:textSize="36sp">
+    </TextView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="Recipe name: "
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="@color/black">
+        </TextView>
+
+        <EditText
+            android:id="@+id/recipeNameET"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        </EditText>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="Type: "
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="@color/black">
+        </TextView>
+
+        <Spinner
+            android:id="@+id/recipeTypeSpinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        </Spinner>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="Ingredient: "
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="@color/black">
+        </TextView>
+
+        <EditText
+            android:id="@+id/recipeIngredientET"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        </EditText>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="Step: "
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="@color/black">
+        </TextView>
+
+        <EditText
+            android:id="@+id/recipeStepET"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        </EditText>
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/editButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rounded_corner_button"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:text="Edit"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:textColor="@color/white">
+    </Button>
+
+</LinearLayout>

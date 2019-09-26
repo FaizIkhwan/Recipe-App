@@ -48,10 +48,7 @@ public class RecipeHomeAdapter extends RecyclerView.Adapter<RecipeHomeAdapter.Vi
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(mContext, RecipeDetailActivity.class);
-                intent.putExtra("name", recipe.getTitle());
-                intent.putExtra("type", recipe.getType());
-                intent.putExtra("ingredient", recipe.getIngredient());
-                intent.putExtra("step", recipe.getStep());
+                intent.putExtra("recipe", recipe);
                 mContext.startActivity(intent);
             }
         });

@@ -3,7 +3,6 @@ package com.faizikhwan.recipeapp.Activity;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -12,7 +11,6 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.faizikhwan.recipeapp.Adapter.RecipeHomeAdapter;
 import com.faizikhwan.recipeapp.Database.DatabaseHelper;
 import com.faizikhwan.recipeapp.Helper.XMLParser;
 import com.faizikhwan.recipeapp.Model.Recipe;
@@ -22,19 +20,20 @@ import com.faizikhwan.recipeapp.R;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AddRecipeActivity extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
+public class EditRecipeActivity extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
 
     // Constant
-    private final String TAG = "AddRecipeActivity";
+    private final String TAG = "EditRecipeActivity";
 
     // Interface component
     private EditText recipeNameET;
     private EditText recipeIngredientET;
     private EditText recipeStepET;
     private Spinner recipeTypeSpinner;
-    private Button addButton;
+    private Button editButton;
 
     // Variable
+    private Recipe recipe;
     private ArrayList<RecipeType> recipeTypes;
     private String recipeName;
     private String recipeIngredient;
@@ -47,27 +46,29 @@ public class AddRecipeActivity extends AppCompatActivity implements View.OnClick
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_recipe);
+        setContentView(R.layout.activity_edit_recipe);
 
         setupActionBar();
+        getInformation();
         initComponent();
         setOnClickListener();
         setOnItemSelectedListener();
         populateSpinner();
+        displayCurrentInformation();
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.addButton:
+            case R.id.editButton:
                 recipeName = recipeNameET.getText().toString();
                 recipeIngredient = recipeIngredientET.getText().toString();
                 recipeStep = recipeStepET.getText().toString();
                 if (recipeName.isEmpty() || recipeIngredient.isEmpty() || recipeStep.isEmpty()) {
                     Toast.makeText(this, "Must fill all detail", Toast.LENGTH_SHORT).show();
                 } else {
-                    saveToDatabase();
-                    Toast.makeText(this, "Add success", Toast.LENGTH_SHORT).show();
+                    updateToDatabase();
+                    Toast.makeText(this, "Edit success", Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(this, HomeActivity.class));
                     finish();
                 }
@@ -100,16 +101,21 @@ public class AddRecipeActivity extends AppCompatActivity implements View.OnClick
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);   //show back button
     }
 
+    private void getInformation() {
+        Intent intent = getIntent();
+        recipe = (Recipe) intent.getSerializableExtra("recipe");
+    }
+
     private void initComponent() {
         recipeNameET = findViewById(R.id.recipeNameET);
         recipeIngredientET = findViewById(R.id.recipeIngredientET);
         recipeStepET = findViewById(R.id.recipeStepET);
         recipeTypeSpinner = findViewById(R.id.recipeTypeSpinner);
-        addButton = findViewById(R.id.addButton);
+        editButton = findViewById(R.id.editButton);
     }
 
     private void setOnClickListener() {
-        addButton.setOnClickListener(this);
+        editButton.setOnClickListener(this);
     }
 
     private void setOnItemSelectedListener() {
@@ -126,8 +132,25 @@ public class AddRecipeActivity extends AppCompatActivity implements View.OnClick
         recipeTypeSpinner.setAdapter(adapter);
     }
 
-    private void saveToDatabase() {
+    private void updateToDatabase() {
         myDB = new DatabaseHelper(this);
-        myDB.insertDataRecipe(recipeName, recipeIngredient, recipeStep, recipeTypeChoice);
+        myDB.updateDataRecipe(String.valueOf(recipe.getId()), recipeName, recipeIngredient, recipeStep, recipeTypeChoice);
+    }
+
+    private void displayCurrentInformation() {
+        recipeNameET.setText(recipe.getTitle());
+        recipeIngredientET.setText(recipe.getIngredient());
+        recipeStepET.setText(recipe.getStep());
+        recipeTypeSpinner.setSelection(getIndex(recipeTypeSpinner, recipe.getType()));
+    }
+
+    private int getIndex(Spinner spinner, String myString){
+        int index = 0;
+        for (int i = 0; i<spinner.getCount(); i++) {
+            if (spinner.getItemAtPosition(i).equals(myString)) {
+                index = i;
+            }
+        }
+        return index;
     }
 }

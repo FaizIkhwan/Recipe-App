@@ -64,7 +64,6 @@ public class DatabaseHelper extends SQLiteOpenHelper
      */
     public boolean insertDataRecipe(String title, String ingredient, String step, String type)
     {
-        Log.d(TAG, "insertDataRecipe");
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(COL_2_RECIPE, title);
@@ -89,7 +88,6 @@ public class DatabaseHelper extends SQLiteOpenHelper
         contentValues.put(COL_3_RECIPE, ingredient);
         contentValues.put(COL_4_RECIPE, step);
         contentValues.put(COL_5_RECIPE, type);
-        //updating rows
         db.update(TABLE_NAME_RECIPE, contentValues, "ID = ?", new String[]{id});
         return true;
     }
@@ -119,10 +117,10 @@ public class DatabaseHelper extends SQLiteOpenHelper
     /**
      * Table TABLE_NAME_RECIPE.
      */
-    public void deleteDataFromRecipe(String id)
+    public void deleteDataFromRecipe(int id)
     {
         SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(TABLE_NAME_RECIPE, COL_1_RECIPE + "=" +id, null);
+        db.delete(TABLE_NAME_RECIPE, COL_1_RECIPE + "=" + id, null);
         db.close();
     }
 

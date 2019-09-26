@@ -41,15 +41,31 @@ public class RecipeListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe_list);
 
-        Intent intent = getIntent();
-        recipeTypeChoice = intent.getStringExtra("type");
-
+        getInformation();
+        setupActionBar();
         initComponent();
         getDataFromDatabase();
         setupRecyclerView();
 
         recipeTypeTV.setText(recipeTypeChoice);
 
+    }
+
+    // Implement back click
+    @Override
+    public boolean onSupportNavigateUp(){
+        finish();
+        return true;
+    }
+
+    private void getInformation() {
+        Intent intent = getIntent();
+        recipeTypeChoice = intent.getStringExtra("type");
+    }
+
+    private void setupActionBar() {
+        assert getSupportActionBar() != null;   //null check
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);   //show back button
     }
 
     private void initComponent() {
