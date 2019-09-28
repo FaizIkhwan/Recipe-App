@@ -1,8 +1,12 @@
 package com.faizikhwan.recipeapp.Activity;
 
 import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -43,8 +47,6 @@ public class RecipeDetailActivity extends AppCompatActivity implements View.OnCl
         initComponent();
         setOnClickListener();
         displayInformation();
-
-        myDB = new DatabaseHelper(this);
     }
 
     @Override
@@ -52,7 +54,7 @@ public class RecipeDetailActivity extends AppCompatActivity implements View.OnCl
         switch (v.getId()) {
             case R.id.editButton:
                 Intent intent = new Intent(this, EditRecipeActivity.class);
-                intent.putExtra("recipe", recipe);
+                intent.putExtra("recipeID", String.valueOf(recipe.getId()));
                 startActivity(intent);
                 break;
             case R.id.deleteButton:
@@ -77,7 +79,27 @@ public class RecipeDetailActivity extends AppCompatActivity implements View.OnCl
 
     private void getInformation() {
         Intent intent = getIntent();
-        recipe = (Recipe) intent.getSerializableExtra("recipe");
+        String recipeID = intent.getStringExtra("recipeID");
+        recipe = getInformationFromDatabase(recipeID);
+    }
+
+    private Recipe getInformationFromDatabase(String recipeID) {
+        Recipe recipeRes = new Recipe();
+        myDB = new DatabaseHelper(this);
+        Cursor res = myDB.getDataFromRecipeWithID(recipeID);
+        if (res != null && res.moveToFirst()) {
+            do {
+                int id = res.getInt(res.getColumnIndex("ID"));
+                String title = res.getString(res.getColumnIndex("TITLE"));
+                String ingredient = res.getString(res.getColumnIndex("INGREDIENT"));
+                String step = res.getString(res.getColumnIndex("STEP"));
+                String type = res.getString(res.getColumnIndex("TYPE"));
+                byte[] image = res.getBlob(res.getColumnIndex("IMAGE"));
+
+                recipeRes = new Recipe(id, title, ingredient, step, type, image);
+            } while (res.moveToNext());
+        }
+        return recipeRes;
     }
 
     private void initComponent() {
@@ -100,6 +122,10 @@ public class RecipeDetailActivity extends AppCompatActivity implements View.OnCl
         recipeTypeTV.setText(recipe.getType());
         recipeIngredientTV.setText(recipe.getIngredient());
         recipeStepTV.setText(recipe.getStep());
+
+        byte[] image = recipe.getImage();
+        Bitmap bitmap = BitmapFactory.decodeByteArray(image, 0, image.length);
+        recipeImageIV.setImageBitmap(bitmap);
     }
 
     private void deleteRecipeFromDatabase() {

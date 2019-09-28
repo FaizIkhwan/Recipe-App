@@ -24,6 +24,7 @@ public class DatabaseHelper extends SQLiteOpenHelper
     private static final String COL_3_RECIPE = "INGREDIENT";
     private static final String COL_4_RECIPE = "STEP";
     private static final String COL_5_RECIPE = "TYPE";
+    private static final String COL_6_RECIPE = "IMAGE";
 
     public DatabaseHelper(Context context)
     {
@@ -40,7 +41,7 @@ public class DatabaseHelper extends SQLiteOpenHelper
         Log.d(TAG, "onCreate");
 
         //creating required tables
-        db.execSQL("create table " + TABLE_NAME_RECIPE +" (ID INTEGER PRIMARY KEY AUTOINCREMENT, TITLE TEXT, INGREDIENT TEXT, STEP TEXT, TYPE TEXT);");
+        db.execSQL("create table " + TABLE_NAME_RECIPE +" (ID INTEGER PRIMARY KEY AUTOINCREMENT, TITLE TEXT, INGREDIENT TEXT, STEP TEXT, TYPE TEXT, IMAGE BLOB);");
     }
 
     /**
@@ -62,7 +63,7 @@ public class DatabaseHelper extends SQLiteOpenHelper
     /**
      * Table TABLE_NAME_RECIPE
      */
-    public boolean insertDataRecipe(String title, String ingredient, String step, String type)
+    public boolean insertDataRecipe(String title, String ingredient, String step, String type, byte[] image)
     {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
@@ -70,6 +71,7 @@ public class DatabaseHelper extends SQLiteOpenHelper
         contentValues.put(COL_3_RECIPE, ingredient);
         contentValues.put(COL_4_RECIPE, step);
         contentValues.put(COL_5_RECIPE, type);
+        contentValues.put(COL_6_RECIPE, image);
         long res = db.insert(TABLE_NAME_RECIPE, null, contentValues);
         if(res == -1)
             return false;
@@ -80,7 +82,7 @@ public class DatabaseHelper extends SQLiteOpenHelper
     /**
      * Table TABLE_NAME_RECIPE
      */
-    public boolean updateDataRecipe(String id, String title, String ingredient, String step, String type)
+    public boolean updateDataRecipe(String id, String title, String ingredient, String step, String type, byte[] image)
     {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
@@ -88,6 +90,7 @@ public class DatabaseHelper extends SQLiteOpenHelper
         contentValues.put(COL_3_RECIPE, ingredient);
         contentValues.put(COL_4_RECIPE, step);
         contentValues.put(COL_5_RECIPE, type);
+        contentValues.put(COL_6_RECIPE, image);
         db.update(TABLE_NAME_RECIPE, contentValues, "ID = ?", new String[]{id});
         return true;
     }
@@ -99,6 +102,17 @@ public class DatabaseHelper extends SQLiteOpenHelper
     {
         SQLiteDatabase db = this.getWritableDatabase();
         String query = "select * from " + TABLE_NAME_RECIPE;
+        Cursor res = db.rawQuery(query,null);
+        return res;
+    }
+
+    /**
+     * Table TABLE_NAME_RECIPE.
+     */
+    public Cursor getDataFromRecipeWithID(String id)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "select * from " + TABLE_NAME_RECIPE + " where ID = '" + id + "';";
         Cursor res = db.rawQuery(query,null);
         return res;
     }

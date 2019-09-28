@@ -2,8 +2,11 @@ package com.faizikhwan.recipeapp.Adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,11 +47,16 @@ public class RecipeHomeAdapter extends RecyclerView.Adapter<RecipeHomeAdapter.Vi
         holder.recipeNameTV.setText(recipe.getTitle());
         holder.recipeTypeTV.setText(recipe.getType());
 
+        byte[] image = recipe.getImage();
+        Bitmap bitmap = BitmapFactory.decodeByteArray(image, 0, image.length);
+        holder.recipeImageIV.setImageBitmap(bitmap);
+
         holder.viewButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(mContext, RecipeDetailActivity.class);
-                intent.putExtra("recipe", recipe);
+                Log.d(TAG, "id before pass: " + recipe.getId());
+                intent.putExtra("recipeID", String.valueOf(recipe.getId()));
                 mContext.startActivity(intent);
             }
         });

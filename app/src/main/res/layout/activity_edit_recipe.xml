@@ -18,6 +18,13 @@
         android:textSize="36sp">
     </TextView>
 
+    <ImageView
+        android:id="@+id/recipeImageIV"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_margin="5dp">
+    </ImageView>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -114,17 +121,45 @@
 
     </LinearLayout>
 
-    <Button
-        android:id="@+id/editButton"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/rounded_corner_button"
-        android:layout_gravity="center"
-        android:layout_marginTop="20dp"
-        android:text="Edit"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        android:textColor="@color/white">
-    </Button>
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"
+        android:weightSum="2"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/changeImageButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rounded_corner_button"
+            android:layout_margin="10dp"
+            android:layout_weight="1"
+            android:padding="10dp"
+            android:text="Change image"
+            android:textSize="18sp"
+            android:layout_gravity="center"
+            android:textStyle="bold"
+            android:textColor="@color/white">
+        </Button>
+
+        <Button
+            android:id="@+id/editButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rounded_corner_button"
+            android:layout_gravity="center"
+            android:layout_margin="10dp"
+            android:layout_weight="1"
+            android:padding="10dp"
+            android:text="Edit"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="@color/white">
+        </Button>
+
+    </LinearLayout>
 
 </LinearLayout>

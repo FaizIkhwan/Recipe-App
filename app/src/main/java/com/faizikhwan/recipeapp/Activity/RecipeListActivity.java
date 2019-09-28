@@ -84,8 +84,9 @@ public class RecipeListActivity extends AppCompatActivity {
                 String ingredient = res.getString(res.getColumnIndex("INGREDIENT"));
                 String step = res.getString(res.getColumnIndex("STEP"));
                 String type = res.getString(res.getColumnIndex("TYPE"));
+                byte[] image = res.getBlob(res.getColumnIndex("IMAGE"));
 
-                recipes.add(new Recipe(id, title, ingredient, step, type));
+                recipes.add(new Recipe(id, title, ingredient, step, type, image));
             } while (res.moveToNext());
         }
     }

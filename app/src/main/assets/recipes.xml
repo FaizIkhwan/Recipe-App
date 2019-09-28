@@ -2,7 +2,7 @@
 <recipes>
 
     <recipe>
-        <id>1</id>
+        <id>0</id>
         <title>Fish and chips</title>
         <ingredient>Fish, fries</ingredient>
         <step>1. Fry, 2. Eat</step>
@@ -10,7 +10,7 @@
     </recipe>
 
     <recipe>
-        <id>1</id>
+        <id>0</id>
         <title>Nasi Lemak</title>
         <ingredient>Rice, Sambal</ingredient>
         <step>1. Cook, 2. Eat</step>
@@ -18,7 +18,7 @@
     </recipe>
 
     <recipe>
-        <id>1</id>
+        <id>0</id>
         <title>Char Kuey Tiow</title>
         <ingredient>Noodle</ingredient>
         <step>1. Cook, 2. Eat</step>
@@ -26,7 +26,7 @@
     </recipe>
 
     <recipe>
-        <id>1</id>
+        <id>0</id>
         <title>Tosai</title>
         <ingredient>Flour</ingredient>
         <step>1. Bake, 2. Eat</step>

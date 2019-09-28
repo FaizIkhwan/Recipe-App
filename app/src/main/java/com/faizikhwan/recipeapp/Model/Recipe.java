@@ -1,6 +1,7 @@
 package com.faizikhwan.recipeapp.Model;
 
 import java.io.Serializable;
+import java.util.Arrays;
 
 public class Recipe implements Serializable {
 
@@ -9,15 +10,17 @@ public class Recipe implements Serializable {
     private String ingredient;
     private String step;
     private String type;
+    private byte[] image;
 
     public Recipe() {}
 
-    public Recipe(int id, String title, String ingredient, String step, String type) {
+    public Recipe(int id, String title, String ingredient, String step, String type, byte[] image) {
         this.id = id;
         this.title = title;
         this.ingredient = ingredient;
         this.step = step;
         this.type = type;
+        this.image = image;
     }
 
     public int getId() {
@@ -60,6 +63,14 @@ public class Recipe implements Serializable {
         this.type = type;
     }
 
+    public byte[] getImage() {
+        return image;
+    }
+
+    public void setImage(byte[] image) {
+        this.image = image;
+    }
+
     @Override
     public String toString() {
         return "Recipe{" +
@@ -68,6 +79,7 @@ public class Recipe implements Serializable {
                 ", ingredient='" + ingredient + '\'' +
                 ", step='" + step + '\'' +
                 ", type='" + type + '\'' +
+                ", image=" + Arrays.toString(image) +
                 '}';
     }
 }

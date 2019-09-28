@@ -123,15 +123,17 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                 String ingredient = res.getString(res.getColumnIndex("INGREDIENT"));
                 String step = res.getString(res.getColumnIndex("STEP"));
                 String type = res.getString(res.getColumnIndex("TYPE"));
+                byte[] image = res.getBlob(res.getColumnIndex("IMAGE"));
 
-                recipes.add(new Recipe(id, title, ingredient, step, type));
+                recipes.add(new Recipe(id, title, ingredient, step, type, image));
             } while (res.moveToNext());
-        } else {
-            recipes = XMLParser.parseXMLRecipes(this, "recipes.xml");
-            for (Recipe recipe: recipes) {
-                myDB.insertDataRecipe(recipe.getTitle(), recipe.getIngredient(), recipe.getStep(), recipe.getType());
-            }
         }
+//        else {
+//            recipes = XMLParser.parseXMLRecipes(this, "recipes.xml");
+//            for (Recipe recipe: recipes) {
+//                myDB.insertDataRecipe(recipe.getTitle(), recipe.getIngredient(), recipe.getStep(), recipe.getType(), null);
+//            }
+//        }
     }
 
     private void setupRecyclerView() {
