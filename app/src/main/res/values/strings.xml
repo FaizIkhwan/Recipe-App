@@ -4,4 +4,40 @@
     <string name="chinese">Chinese</string>
     <string name="indian">Indian</string>
     <string name="western">Western</string>
+
+    <string name="type">type</string>
+    <string name="recipetypes_xml">recipetypes.xml</string>
+    <string name="recipes_xml">recipes.xml</string>
+    <string name="ID">ID</string>
+    <string name="TITLE">TITLE</string>
+    <string name="INGREDIENT">INGREDIENT</string>
+    <string name="STEP">STEP</string>
+    <string name="TYPE">TYPE</string>
+    <string name="IMAGE">IMAGE</string>
+
+    <string name="toast_fill_all_detail_and_image">Must fill all detail and image</string>
+    <string name="toast_add_success">Add success</string>
+
+    <string name="toast_fill_all_detail">Must fill all detail</string>
+    <string name="toast_edit_success">Edit success</string>
+    <string name="recipe_id">recipeID</string>
+
+    <string name="toast_delete_success">Delete success</string>
+
+    <string name="add_recipe">Add recipe</string>
+    <string name="edit_recipe">Edit recipe</string>
+    <string name="recipe_name_label">Recipe name: </string>
+    <string name="type_label">Type: </string>
+    <string name="ingredient_label">Ingredient: </string>
+    <string name="step_label">Step: </string>
+    <string name="recipe_apps_label">Recipe apps</string>
+    <string name="add_image_button">Add image</string>
+    <string name="add_recipe_button">Add recipe</string>
+    <string name="change_image_button">Change image</string>
+    <string name="edit_button">Edit</string>
+    <string name="delete_button">Delete</string>
+    <string name="add_button">Add</string>
+    <string name="filter_button">Filter</string>
+    <string name="view_button">View</string>
+
 </resources>

@@ -54,12 +54,12 @@ public class RecipeDetailActivity extends AppCompatActivity implements View.OnCl
         switch (v.getId()) {
             case R.id.editButton:
                 Intent intent = new Intent(this, EditRecipeActivity.class);
-                intent.putExtra("recipeID", String.valueOf(recipe.getId()));
+                intent.putExtra(getResources().getString(R.string.recipe_id), String.valueOf(recipe.getId()));
                 startActivity(intent);
                 break;
             case R.id.deleteButton:
                 deleteRecipeFromDatabase();
-                Toast.makeText(this, "Delete success", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, getResources().getString(R.string.toast_delete_success), Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(this, HomeActivity.class));
                 break;
         }
@@ -79,7 +79,7 @@ public class RecipeDetailActivity extends AppCompatActivity implements View.OnCl
 
     private void getInformation() {
         Intent intent = getIntent();
-        String recipeID = intent.getStringExtra("recipeID");
+        String recipeID = intent.getStringExtra(getResources().getString(R.string.recipe_id));
         recipe = getInformationFromDatabase(recipeID);
     }
 
@@ -89,12 +89,12 @@ public class RecipeDetailActivity extends AppCompatActivity implements View.OnCl
         Cursor res = myDB.getDataFromRecipeWithID(recipeID);
         if (res != null && res.moveToFirst()) {
             do {
-                int id = res.getInt(res.getColumnIndex("ID"));
-                String title = res.getString(res.getColumnIndex("TITLE"));
-                String ingredient = res.getString(res.getColumnIndex("INGREDIENT"));
-                String step = res.getString(res.getColumnIndex("STEP"));
-                String type = res.getString(res.getColumnIndex("TYPE"));
-                byte[] image = res.getBlob(res.getColumnIndex("IMAGE"));
+                int id = res.getInt(res.getColumnIndex(getResources().getString(R.string.ID)));
+                String title = res.getString(res.getColumnIndex(getResources().getString(R.string.TITLE)));
+                String ingredient = res.getString(res.getColumnIndex(getResources().getString(R.string.INGREDIENT)));
+                String step = res.getString(res.getColumnIndex(getResources().getString(R.string.STEP)));
+                String type = res.getString(res.getColumnIndex(getResources().getString(R.string.TYPE)));
+                byte[] image = res.getBlob(res.getColumnIndex(getResources().getString(R.string.IMAGE)));
 
                 recipeRes = new Recipe(id, title, ingredient, step, type, image);
             } while (res.moveToNext());

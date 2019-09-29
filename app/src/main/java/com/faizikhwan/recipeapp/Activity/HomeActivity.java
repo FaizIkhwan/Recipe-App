@@ -63,7 +63,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         switch (v.getId()) {
             case R.id.filterButton:
                 Intent intent = new Intent(this, RecipeListActivity.class);
-                intent.putExtra("type", recipeTypeChoice);
+                intent.putExtra(getResources().getString(R.string.type), recipeTypeChoice);
                 startActivity(intent);
                 break;
             case R.id.addButton:
@@ -103,7 +103,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void populateSpinner() {
-        recipeTypes = XMLParser.parseXMLRecipeTypes(this, "recipetypes.xml");
+        recipeTypes = XMLParser.parseXMLRecipeTypes(this, getResources().getString(R.string.recipetypes_xml));
         List<String> types = new ArrayList<>();
         for(RecipeType recipe: recipeTypes) {
             types.add(recipe.getType());
@@ -118,22 +118,34 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         Cursor res = myDB.getDataFromRecipe();
         if (res != null && res.moveToFirst()) {
             do {
-                int id = res.getInt(res.getColumnIndex("ID"));
-                String title = res.getString(res.getColumnIndex("TITLE"));
-                String ingredient = res.getString(res.getColumnIndex("INGREDIENT"));
-                String step = res.getString(res.getColumnIndex("STEP"));
-                String type = res.getString(res.getColumnIndex("TYPE"));
-                byte[] image = res.getBlob(res.getColumnIndex("IMAGE"));
+                int id = res.getInt(res.getColumnIndex(getResources().getString(R.string.ID)));
+                String title = res.getString(res.getColumnIndex(getResources().getString(R.string.TITLE)));
+                String ingredient = res.getString(res.getColumnIndex(getResources().getString(R.string.INGREDIENT)));
+                String step = res.getString(res.getColumnIndex(getResources().getString(R.string.STEP)));
+                String type = res.getString(res.getColumnIndex(getResources().getString(R.string.TYPE)));
+                byte[] image = res.getBlob(res.getColumnIndex(getResources().getString(R.string.IMAGE)));
 
                 recipes.add(new Recipe(id, title, ingredient, step, type, image));
             } while (res.moveToNext());
+        } else {
+            List<Recipe> localRecipes = XMLParser.parseXMLRecipes(this, getResources().getString(R.string.recipes_xml));
+            for (Recipe recipe: localRecipes) {
+                myDB.insertDataRecipe(recipe.getTitle(), recipe.getIngredient(), recipe.getStep(), recipe.getType(), new byte[0]);
+            }
+            Cursor res1 = myDB.getDataFromRecipe();
+            if (res1 != null && res1.moveToFirst()) {
+                do {
+                    int id = res1.getInt(res1.getColumnIndex(getResources().getString(R.string.ID)));
+                    String title = res1.getString(res1.getColumnIndex(getResources().getString(R.string.TITLE)));
+                    String ingredient = res1.getString(res1.getColumnIndex(getResources().getString(R.string.INGREDIENT)));
+                    String step = res1.getString(res1.getColumnIndex(getResources().getString(R.string.STEP)));
+                    String type = res1.getString(res1.getColumnIndex(getResources().getString(R.string.TYPE)));
+                    byte[] image = res1.getBlob(res1.getColumnIndex(getResources().getString(R.string.IMAGE)));
+
+                    recipes.add(new Recipe(id, title, ingredient, step, type, image));
+                } while (res1.moveToNext());
+            }
         }
-//        else {
-//            recipes = XMLParser.parseXMLRecipes(this, "recipes.xml");
-//            for (Recipe recipe: recipes) {
-//                myDB.insertDataRecipe(recipe.getTitle(), recipe.getIngredient(), recipe.getStep(), recipe.getType(), null);
-//            }
-//        }
     }
 
     private void setupRecyclerView() {

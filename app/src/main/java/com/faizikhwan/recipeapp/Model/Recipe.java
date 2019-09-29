@@ -12,7 +12,9 @@ public class Recipe implements Serializable {
     private String type;
     private byte[] image;
 
-    public Recipe() {}
+    public Recipe() {
+        this.image = new byte[0];
+    }
 
     public Recipe(int id, String title, String ingredient, String step, String type, byte[] image) {
         this.id = id;

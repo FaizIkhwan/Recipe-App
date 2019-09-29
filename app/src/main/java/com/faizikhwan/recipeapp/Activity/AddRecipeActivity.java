@@ -73,10 +73,10 @@ public class AddRecipeActivity extends AppCompatActivity implements View.OnClick
                 recipeIngredient = recipeIngredientET.getText().toString().trim();
                 recipeStep = recipeStepET.getText().toString().trim();
                 if (recipeName.isEmpty() || recipeIngredient.isEmpty() || recipeStep.isEmpty() || recipeImageIV.getDrawable() == null) {
-                    Toast.makeText(this, "Must fill all detail and image", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, getResources().getString(R.string.toast_fill_all_detail_and_image), Toast.LENGTH_SHORT).show();
                 } else {
                     saveToDatabase();
-                    Toast.makeText(this, "Add success", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, getResources().getString(R.string.toast_add_success), Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(this, HomeActivity.class));
                     finish();
                 }
@@ -133,7 +133,7 @@ public class AddRecipeActivity extends AppCompatActivity implements View.OnClick
     }
 
     private void populateSpinner() {
-        recipeTypes = XMLParser.parseXMLRecipeTypes(this, "recipetypes.xml");
+        recipeTypes = XMLParser.parseXMLRecipeTypes(this, getResources().getString(R.string.recipetypes_xml));
         List<String> types = new ArrayList<>();
         for(RecipeType recipe: recipeTypes) {
             types.add(recipe.getType());

@@ -75,21 +75,19 @@ public class EditRecipeActivity extends AppCompatActivity implements View.OnClic
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.editButton:
-                Log.d(TAG, "onClick editButton");
                 recipeName = recipeNameET.getText().toString().trim();
                 recipeIngredient = recipeIngredientET.getText().toString().trim();
                 recipeStep = recipeStepET.getText().toString().trim();
                 if (recipeName.isEmpty() || recipeIngredient.isEmpty() || recipeStep.isEmpty()) {
-                    Toast.makeText(this, "Must fill all detail", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, getResources().getString(R.string.toast_fill_all_detail), Toast.LENGTH_SHORT).show();
                 } else {
                     updateToDatabase();
-                    Toast.makeText(this, "Edit success", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, getResources().getString(R.string.toast_edit_success), Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(this, HomeActivity.class));
                     finish();
                 }
                 break;
             case R.id.changeImageButton:
-                Log.d(TAG, "onClick changeImageButton");
                 openGallery();
                 break;
         }
@@ -123,7 +121,7 @@ public class EditRecipeActivity extends AppCompatActivity implements View.OnClic
 
     private void getInformation() {
         Intent intent = getIntent();
-        String recipeID = intent.getStringExtra("recipeID");
+        String recipeID = intent.getStringExtra(getResources().getString(R.string.recipe_id));
         recipe = getInformationFromDatabase(recipeID);
     }
 
@@ -133,12 +131,12 @@ public class EditRecipeActivity extends AppCompatActivity implements View.OnClic
         Cursor res = myDB.getDataFromRecipeWithID(recipeID);
         if (res != null && res.moveToFirst()) {
             do {
-                int id = res.getInt(res.getColumnIndex("ID"));
-                String title = res.getString(res.getColumnIndex("TITLE"));
-                String ingredient = res.getString(res.getColumnIndex("INGREDIENT"));
-                String step = res.getString(res.getColumnIndex("STEP"));
-                String type = res.getString(res.getColumnIndex("TYPE"));
-                byte[] image = res.getBlob(res.getColumnIndex("IMAGE"));
+                int id = res.getInt(res.getColumnIndex(getResources().getString(R.string.ID)));
+                String title = res.getString(res.getColumnIndex(getResources().getString(R.string.TITLE)));
+                String ingredient = res.getString(res.getColumnIndex(getResources().getString(R.string.INGREDIENT)));
+                String step = res.getString(res.getColumnIndex(getResources().getString(R.string.STEP)));
+                String type = res.getString(res.getColumnIndex(getResources().getString(R.string.TYPE)));
+                byte[] image = res.getBlob(res.getColumnIndex(getResources().getString(R.string.IMAGE)));
 
                 recipeRes = new Recipe(id, title, ingredient, step, type, image);
             } while (res.moveToNext());
@@ -166,7 +164,7 @@ public class EditRecipeActivity extends AppCompatActivity implements View.OnClic
     }
 
     private void populateSpinner() {
-        recipeTypes = XMLParser.parseXMLRecipeTypes(this, "recipetypes.xml");
+        recipeTypes = XMLParser.parseXMLRecipeTypes(this, getResources().getString(R.string.recipetypes_xml));
         List<String> types = new ArrayList<>();
         for(RecipeType recipe: recipeTypes) {
             types.add(recipe.getType());
@@ -188,6 +186,7 @@ public class EditRecipeActivity extends AppCompatActivity implements View.OnClic
 
         recipeImageIV.setVisibility(View.VISIBLE);
         byte[] image = recipe.getImage();
+        Log.d(TAG, "image in editrecipeactivity: " + image);
         Bitmap bitmap = BitmapFactory.decodeByteArray(image, 0, image.length);
         recipeImageIV.setImageBitmap(bitmap);
     }
@@ -203,7 +202,6 @@ public class EditRecipeActivity extends AppCompatActivity implements View.OnClic
     }
 
     private void openGallery() {
-        Log.d(TAG, "openGallery");
         Intent gallery = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
         startActivityForResult(gallery, PICK_IMAGE);
     }

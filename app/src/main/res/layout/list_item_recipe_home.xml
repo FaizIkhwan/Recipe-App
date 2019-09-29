@@ -48,11 +48,11 @@
 
                 <TextView
                     android:id="@+id/recipeTypeTV"
-                    android:layout_width="100dp"
+                    android:layout_width="80dp"
                     android:layout_height="wrap_content"
                     android:paddingTop="10dp"
-                    android:paddingStart="30dp"
-                    android:text="type"
+                    android:layout_marginStart="30dp"
+                    android:text="Western"
                     android:textColor="@color/black"
                     android:textSize="14sp">
                 </TextView>
@@ -62,10 +62,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/rounded_corner_button"
-                    android:layout_marginLeft="30dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="5dp"
                     android:textColor="@color/white"
                     android:textStyle="bold"
-                    android:text="View">
+                    android:text="@string/view_button">
                 </Button>
 
             </LinearLayout>

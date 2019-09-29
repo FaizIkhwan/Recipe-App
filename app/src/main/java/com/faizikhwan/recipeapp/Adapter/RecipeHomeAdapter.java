@@ -55,8 +55,7 @@ public class RecipeHomeAdapter extends RecyclerView.Adapter<RecipeHomeAdapter.Vi
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(mContext, RecipeDetailActivity.class);
-                Log.d(TAG, "id before pass: " + recipe.getId());
-                intent.putExtra("recipeID", String.valueOf(recipe.getId()));
+                intent.putExtra(mContext.getResources().getString(R.string.recipe_id), String.valueOf(recipe.getId()));
                 mContext.startActivity(intent);
             }
         });
@@ -69,12 +68,12 @@ public class RecipeHomeAdapter extends RecyclerView.Adapter<RecipeHomeAdapter.Vi
 
     public class ViewHolder extends RecyclerView.ViewHolder{
 
-        public TextView recipeNameTV;
-        public TextView recipeTypeTV;
-        public ImageView recipeImageIV;
-        public Button viewButton;
+        private TextView recipeNameTV;
+        private TextView recipeTypeTV;
+        private ImageView recipeImageIV;
+        private Button viewButton;
 
-        public ViewHolder(View itemView) {
+        ViewHolder(View itemView) {
             super(itemView);
 
             recipeNameTV = itemView.findViewById(R.id.recipeNameTV);

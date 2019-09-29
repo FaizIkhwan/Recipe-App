@@ -60,7 +60,7 @@ public class RecipeListActivity extends AppCompatActivity {
 
     private void getInformation() {
         Intent intent = getIntent();
-        recipeTypeChoice = intent.getStringExtra("type");
+        recipeTypeChoice = intent.getStringExtra(getResources().getString(R.string.type));
     }
 
     private void setupActionBar() {
@@ -79,12 +79,12 @@ public class RecipeListActivity extends AppCompatActivity {
         Cursor res = myDB.getDataFromRecipeWithType(recipeTypeChoice);
         if (res != null && res.moveToFirst()) {
             do {
-                int id = res.getInt(res.getColumnIndex("ID"));
-                String title = res.getString(res.getColumnIndex("TITLE"));
-                String ingredient = res.getString(res.getColumnIndex("INGREDIENT"));
-                String step = res.getString(res.getColumnIndex("STEP"));
-                String type = res.getString(res.getColumnIndex("TYPE"));
-                byte[] image = res.getBlob(res.getColumnIndex("IMAGE"));
+                int id = res.getInt(res.getColumnIndex(getResources().getString(R.string.ID)));
+                String title = res.getString(res.getColumnIndex(getResources().getString(R.string.TITLE)));
+                String ingredient = res.getString(res.getColumnIndex(getResources().getString(R.string.INGREDIENT)));
+                String step = res.getString(res.getColumnIndex(getResources().getString(R.string.STEP)));
+                String type = res.getString(res.getColumnIndex(getResources().getString(R.string.TYPE)));
+                byte[] image = res.getBlob(res.getColumnIndex(getResources().getString(R.string.IMAGE)));
 
                 recipes.add(new Recipe(id, title, ingredient, step, type, image));
             } while (res.moveToNext());
